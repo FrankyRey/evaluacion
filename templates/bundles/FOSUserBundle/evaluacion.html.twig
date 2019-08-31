@@ -1,0 +1,40 @@
+{% extends '@AdminLTE/FOSUserBundle/layout.html.twig' %}
+
+{% block page_title %}
+	{{ asignacionMateria.idCurricula.idMateria.nombreMateria }}
+{% endblock %}
+
+{% block page_subtitle %}
+	{{ asignacionMateria.profesorMatricula.nombreCompleto }}
+{% endblock %}
+
+{% block page_content %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+                	<div class="panel-body">
+                    	<div class="panel-content">
+							<div class="row">
+								{{ form_start(form) }}
+									<div class="col-md-12">
+										{{ form_label(form.idOpcionPregunta, pregunta.textoPregunta) }}
+										{{ form_widget(form.idOpcionPregunta) }}
+										<button class="btn btn-primary" type="submit">
+        									<span>
+            									<i class="{{ button_icon|default('fas fa-arrow-right') }}"></i>
+        									</span>
+        									<span>
+            									{{ button_label|default('Siguiente') }}
+        									</span>
+    									</button>
+    								</div>
+								{{ form_end(form) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

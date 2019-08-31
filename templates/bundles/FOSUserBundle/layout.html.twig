@@ -1,0 +1,35 @@
+{% extends '@AdminLTE/FOSUserBundle/layout.html.twig' %}
+
+{% block page_title %}
+	{{ alumno.nombreCompleto }}
+{% endblock %}
+
+{% block page_subtitle %}
+	{{ alumno.idGrupo.idOfertaAcademica.nombreOfertaAcademica }}
+{% endblock %}
+
+{% block page_content %}
+	<div class="conteiner-fluid">
+		<div class="row">
+			{% for materia in asignacionMaterias %}
+				<div class="col-md-4">
+					<div class="panel">
+						<div class="panel-body">
+							<a href="{{ path('evaluacion', {'idAsignacionMateria': materia.idAsignacionMateria, 'idPregunta': 1, 'matricula': alumno.matricula}) }}">
+								{{ materia.idCurricula.idMateria.nombreMateria }}
+							</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="panel-body">
+							Este alumno no cuenta con materias
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

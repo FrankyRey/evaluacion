@@ -36,16 +36,6 @@ class Grupo
     private $periodoGrupo;
 
     /**
-     * @var \OfertaAcademica
-     *
-     * @ORM\ManyToOne(targetEntity="OfertaAcademica")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_oferta_academica", referencedColumnName="id_oferta_academica")
-     * })
-     */
-    private $idOfertaAcademica;
-
-    /**
      * @var \Turno
      *
      * @ORM\ManyToOne(targetEntity="Turno")
@@ -54,6 +44,16 @@ class Grupo
      * })
      */
     private $idTurno;
+
+    /**
+     * @var \OfertaAcademica
+     *
+     * @ORM\ManyToOne(targetEntity="OfertaAcademica")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_oferta_academica", referencedColumnName="id_oferta_academica")
+     * })
+     */
+    private $idOfertaAcademica;
 
     public function getIdGrupo(): ?int
     {
@@ -84,18 +84,6 @@ class Grupo
         return $this;
     }
 
-    public function getIdOfertaAcademica(): ?OfertaAcademica
-    {
-        return $this->idOfertaAcademica;
-    }
-
-    public function setIdOfertaAcademica(?OfertaAcademica $idOfertaAcademica): self
-    {
-        $this->idOfertaAcademica = $idOfertaAcademica;
-
-        return $this;
-    }
-
     public function getIdTurno(): ?Turno
     {
         return $this->idTurno;
@@ -104,6 +92,18 @@ class Grupo
     public function setIdTurno(?Turno $idTurno): self
     {
         $this->idTurno = $idTurno;
+
+        return $this;
+    }
+
+    public function getIdOfertaAcademica(): ?OfertaAcademica
+    {
+        return $this->idOfertaAcademica;
+    }
+
+    public function setIdOfertaAcademica(?OfertaAcademica $idOfertaAcademica): self
+    {
+        $this->idOfertaAcademica = $idOfertaAcademica;
 
         return $this;
     }

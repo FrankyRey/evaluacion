@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AsignacionMateria
  *
- * @ORM\Table(name="asignacion_materia", indexes={@ORM\Index(name="fk_asignacion_materia_grupo1_idx", columns={"id_grupo"}), @ORM\Index(name="fk_asignacion_materia_profesor1_idx", columns={"profesor_matricula"}), @ORM\Index(name="fk_asignacion_materia_curricula1_idx", columns={"id_curricula"})})
+ * @ORM\Table(name="asignacion_materia", indexes={@ORM\Index(name="fk_asignacion_materia_grupo1_idx", columns={"id_grupo"}), @ORM\Index(name="fk_asignacion_materia_curricula1_idx", columns={"id_curricula"}), @ORM\Index(name="fk_asignacion_materia_profesor1_idx", columns={"profesor_matricula"})})
  * @ORM\Entity
  */
 class AsignacionMateria
@@ -20,16 +20,6 @@ class AsignacionMateria
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idAsignacionMateria;
-
-    /**
-     * @var \Curricula
-     *
-     * @ORM\ManyToOne(targetEntity="Curricula")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_curricula", referencedColumnName="id_curricula")
-     * })
-     */
-    private $idCurricula;
 
     /**
      * @var \Grupo
@@ -51,21 +41,19 @@ class AsignacionMateria
      */
     private $profesorMatricula;
 
+    /**
+     * @var \Curricula
+     *
+     * @ORM\ManyToOne(targetEntity="Curricula")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_curricula", referencedColumnName="id_curricula")
+     * })
+     */
+    private $idCurricula;
+
     public function getIdAsignacionMateria(): ?int
     {
         return $this->idAsignacionMateria;
-    }
-
-    public function getIdCurricula(): ?Curricula
-    {
-        return $this->idCurricula;
-    }
-
-    public function setIdCurricula(?Curricula $idCurricula): self
-    {
-        $this->idCurricula = $idCurricula;
-
-        return $this;
     }
 
     public function getIdGrupo(): ?Grupo
@@ -88,6 +76,18 @@ class AsignacionMateria
     public function setProfesorMatricula(?Profesor $profesorMatricula): self
     {
         $this->profesorMatricula = $profesorMatricula;
+
+        return $this;
+    }
+
+    public function getIdCurricula(): ?Curricula
+    {
+        return $this->idCurricula;
+    }
+
+    public function setIdCurricula(?Curricula $idCurricula): self
+    {
+        $this->idCurricula = $idCurricula;
 
         return $this;
     }

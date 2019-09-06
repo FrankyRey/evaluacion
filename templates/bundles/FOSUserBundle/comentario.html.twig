@@ -15,19 +15,22 @@
 				<div class="panel panel-default">
                 	<div class="panel-body">
                     	<div class="panel-content">
-							{{ form_start(form) }}
-								<div class="row">
+							<div class="row">
+								{{ form_start(form) }}
 									<div class="col-md-12">
-										{{ form_label(form.idOpcionPregunta, pregunta.textoPregunta) }}
-										{{ form_widget(form.idOpcionPregunta) }}
+										{{ form_label(form.comentario, "Comentarios abiertos") }}
+										{{ form_widget(form.comentario) }}
+										<button class="btn btn-primary" type="submit">
+        									<span>
+            									<i class="{{ button_icon|default('fas fa-arrow-right') }}"></i>
+        									</span>
+        									<span>
+            									{{ button_label|default('Siguiente') }}
+        									</span>
+    									</button>
     								</div>
-    							</div>
-    							<div class="row">
-    								<div class="col-md-12">
-    									{{ form_widget(form.save) }}
-    								</div>
-    							</div>
-							{{ form_end(form) }}
+								{{ form_end(form) }}
+							</div>
 						</div>
 					</div>
 				</div>

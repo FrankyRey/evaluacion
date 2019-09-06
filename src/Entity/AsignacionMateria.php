@@ -22,14 +22,14 @@ class AsignacionMateria
     private $idAsignacionMateria;
 
     /**
-     * @var \Grupo
+     * @var \Alumno
      *
-     * @ORM\ManyToOne(targetEntity="Grupo")
+     * @ORM\ManyToOne(targetEntity="Alumno")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_grupo", referencedColumnName="id_grupo")
+     *   @ORM\JoinColumn(name="alumno_matricula", referencedColumnName="matricula")
      * })
      */
-    private $idGrupo;
+    private $alumnoMatricula;
 
     /**
      * @var \Profesor
@@ -56,14 +56,14 @@ class AsignacionMateria
         return $this->idAsignacionMateria;
     }
 
-    public function getIdGrupo(): ?Grupo
+    public function getAlumnoMatricula(): ?Alumno
     {
-        return $this->idGrupo;
+        return $this->alumnoMatricula;
     }
 
-    public function setIdGrupo(?Grupo $idGrupo): self
+    public function setAlumnoMatricula(?Alumno $alumnoMatricula): self
     {
-        $this->idGrupo = $idGrupo;
+        $this->alumnoMatricula = $alumnoMatricula;
 
         return $this;
     }

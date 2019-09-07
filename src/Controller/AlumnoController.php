@@ -94,53 +94,90 @@ class AlumnoController extends AbstractController
     {
     	$conn = $this->getDoctrine()->getManager()->getConnection();
 
-            $sqlUltimaPregunta = '
-                SELECT 
-                    MAX(id_pregunta) as ultimaPregunta
-                FROM
-                    pregunta
-                WHERE
-                    id_evaluacion = 1;
-            ';
+        $sqlUltimaPregunta = '
+            SELECT 
+                MAX(id_pregunta) as ultimaPregunta
+            FROM
+                pregunta
+            WHERE
+                id_evaluacion = 1;
+        ';
 
         $stmt = $conn->prepare($sqlUltimaPregunta);
         $stmt->execute();
 
         $ultimaPregunta = (int)$stmt->fetch()['ultimaPregunta'];
 
-        $respuestaEvaluacion = new RespuestaEvaluacion();
-        $respuestaEvaluacion->setIdAsignacionMateria($asignacionMateria);
-        $respuestaEvaluacion->setAlumnoMatricula($alumno);
-        $form = $this->createForm(RespuestaEvaluacionType::class, $respuestaEvaluacion, [
-        	'idPregunta' => $pregunta->getIdPregunta(),
-        ]);
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        
+        $qb
+            ->select('p')
+            ->from(Pregunta::class, 'p')
+            ->leftJoin(OpcionPregunta::class, 'o', 'WITH', 'o.idPregunta = p')
+            ->leftJoin(RespuestaEvaluacion::class, 'r', 'WITH', 'r.idOpcionPregunta = o AND o.idPregunta = p')
+            ->andWhere('r.idAsignacionMateria = :idAsignacionMateria')
+            ->andWhere('r.alumnoMatricula = :matricula')
+            ->andWhere('p.idPregunta = :idPregunta')
+            ->setParameter('idAsignacionMateria', $asignacionMateria->getIdAsignacionMateria())
+            ->setParameter('matricula', $alumno->getMatricula())
+            ->setParameter('idPregunta', $pregunta->getIdPregunta())
+            ->distinct(true)
+        ;
 
-        $form->handleRequest($request);
+        $preguntaRespondida = $qb->getQuery()->getResult();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($respuestaEvaluacion);
-            $entityManager->flush();
+        if(!$preguntaRespondida)
+        {
+            $respuestaEvaluacion = new RespuestaEvaluacion();
+            $respuestaEvaluacion->setIdAsignacionMateria($asignacionMateria);
+            $respuestaEvaluacion->setAlumnoMatricula($alumno);
+            $form = $this->createForm(RespuestaEvaluacionType::class, $respuestaEvaluacion, [
+        	   'idPregunta' => $pregunta->getIdPregunta(),
+            ]);
 
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($respuestaEvaluacion);
+                $entityManager->flush();
+
+                $preguntaSiguiente = $pregunta->getIdPregunta()+1;
+
+                if($preguntaSiguiente <= $ultimaPregunta)
+            	   return $this->redirectToRoute('evaluacion', [
+            		  'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
+            		  'idPregunta' => $preguntaSiguiente,
+            		  'matricula' => $alumno->getMatricula()
+            	   ]);
+           	    else
+           		   return $this->redirectToRoute('comentario', [
+           			  'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
+           			  'matricula' => $alumno->getMatricula()
+           		   ]);
+            }
+
+    	   return $this->render('bundles/FOSUserBundle/evaluacion.html.twig', [
+    		  'asignacionMateria' => $asignacionMateria,
+    		  'pregunta' => $pregunta,
+    		  'form' => $form->createView(),
+    	   ]);
+        }
+        else
+        {
             $preguntaSiguiente = $pregunta->getIdPregunta()+1;
 
             if($preguntaSiguiente <= $ultimaPregunta)
-            	return $this->redirectToRoute('evaluacion', [
-            		'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
-            		'idPregunta' => $preguntaSiguiente,
-            		'matricula' => $alumno->getMatricula()
-            	]);
-           	else
-           		return $this->redirectToRoute('comentario', [
-           			'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
-           			'matricula' => $alumno->getMatricula()
-           		]);
+               return $this->redirectToRoute('evaluacion', [
+                  'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
+                  'idPregunta' => $preguntaSiguiente,
+                    'matricula' => $alumno->getMatricula()
+                ]);
+            else
+               return $this->redirectToRoute('comentario', [
+                  'idAsignacionMateria' => $asignacionMateria->getIdAsignacionMateria(),
+                  'matricula' => $alumno->getMatricula()
+                ]);
         }
-
-    	return $this->render('bundles/FOSUserBundle/evaluacion.html.twig', [
-    		'asignacionMateria' => $asignacionMateria,
-    		'pregunta' => $pregunta,
-    		'form' => $form->createView(),
-    	]);
     }
 }

@@ -52,6 +52,14 @@ class AlumnoController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/", name="profile")
+     */
+    public function profile()
+    {
+        return $this->render('bundles/FOSUserBundle/layout.html.twig');
+    }
+
 
     /**
      * @Route("/{matricula}/{idAsignacionMateria}/comentario", name="comentario")

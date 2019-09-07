@@ -9,13 +9,13 @@ admin_lte:
         # default image for missing user avatar images
         default_avatar: bundles/adminlte/images/default_avatar.png
         # the color skin
-        skin: skin-blue
+        skin: skin-yellow
         # if activated, the boxed_layout will be deactivated
         fixed_layout: false
         # boxed layout (true) or full-screen (false)
         boxed_layout: false
         # initial collapsed state of the sidebar
-        collapsed_sidebar: false
+        collapsed_sidebar: true
         # whether the logo collapses or not
         mini_sidebar: false
         # max number of notifications displayed
@@ -59,7 +59,7 @@ admin_lte:
         adminlte_welcome: home
         adminlte_login: fos_user_security_login
         adminlte_login_check: fos_user_security_check
-        adminlte_registration: fos_user_registration_register
+        # adminlte_registration: fos_user_registration_register
         # adminlte_password_reset: fos_user_resetting_request
         adminlte_message: message
         adminlte_messages: messages

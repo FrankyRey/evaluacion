@@ -16,7 +16,12 @@ class ComentarioType extends AbstractType
     {
         $builder
             ->add('comentario')
-            ->add('save', SubmitType::class, ['label' => 'Create Post'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Finalizar',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ],
+            ])
         ;
     }
 

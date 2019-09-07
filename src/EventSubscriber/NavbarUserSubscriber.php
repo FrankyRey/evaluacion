@@ -41,11 +41,10 @@ class NavbarUserSubscriber implements EventSubscriberInterface
             ->setName($myUser->getUsername())
             ->setUsername($myUser->getUsername())
             ->setIsOnline(true)
-            ->setTitle('demo user')
-            ->setAvatar($myUser->getAvatar())
-            ->setMemberSince($myUser->getRegisteredAt())
         ;
 
         $event->setUser($user);
+
+        $event->setShowProfileLink(false);
     }
 }

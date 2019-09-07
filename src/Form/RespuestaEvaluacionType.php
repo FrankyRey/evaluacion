@@ -39,7 +39,12 @@ class RespuestaEvaluacionType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
             ])
-            ->add('save', SubmitType::class, ['label' => 'Siguiente'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Siguiente',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ],
+            ])
         ;
     }
 

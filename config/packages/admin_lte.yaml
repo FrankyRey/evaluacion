@@ -9,7 +9,7 @@ admin_lte:
         # default image for missing user avatar images
         default_avatar: bundles/adminlte/images/default_avatar.png
         # the color skin
-        skin: skin-yellow
+        skin: skin-black
         # if activated, the boxed_layout will be deactivated
         fixed_layout: false
         # boxed layout (true) or full-screen (false)

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+	Control Escolar
+{% endblock %}
+
+{% block page_subtitle %}
+	Centro de Datos
+{% endblock %}
+
+{% block page_content %}
+	<div class="conteiner-fluid">
+		<div class="row">
+			<div class="col-md-12">
+            	<div class="panel panel-default">
+                	<div class="panel-body">
+                    	<div class="panel-content">
+                            {{ profesor.nombreCompleto }}
+                            <div class="table-responsive">
+                            	<table class="table table-hover" id="materias">
+                                	<thead>
+                                    	<tr>
+                                        	<th>Materia</th>
+                                    	</tr>
+                                	</thead>
+                                	<tbody>
+                                	{% for materia in materias %}
+                                		<tr>
+                                			<td><a href="{{ path('detalle_materia', {matricula: profesor.matricula, idCurricula:materia.0.idCurricula }) }}">{{ materia.0.idMateria.nombreMateria }}</a></td>
+                                		</tr>
+                                	{% else %}
+                                		<tr>
+                                			<td colspan="1">Sin información</td>
+                                		</tr>
+                                	{% endfor %}
+                                	</tbody>
+                                </table>
+                            </div>
+        				</div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

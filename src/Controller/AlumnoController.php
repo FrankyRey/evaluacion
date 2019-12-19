@@ -66,6 +66,11 @@ class AlumnoController extends AbstractController
      */
     public function comentario(Request $request, Alumno $alumno, AsignacionMateria $asignacionMateria)
     {
+        $user = $this->getUser();
+
+        if($alumno->getMatricula() != $user->getUsername())
+            return $this->redirectToRoute('home');
+
         $comentario = new Comentario();
         $comentario->setIdAsignacionMateria($asignacionMateria);
         $comentario->setAlumnoMatricula($alumno);
@@ -92,6 +97,11 @@ class AlumnoController extends AbstractController
      */
     public function evaluacion(Request $request, Alumno $alumno, AsignacionMateria $asignacionMateria, Pregunta $pregunta)
     {
+        $user = $this->getUser();
+
+        if($alumno->getMatricula() != $user->getUsername())
+            return $this->redirectToRoute('home');
+        
     	$conn = $this->getDoctrine()->getManager()->getConnection();
 
         $sqlUltimaPregunta = '

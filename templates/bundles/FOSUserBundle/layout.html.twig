@@ -13,17 +13,17 @@
 		<div class="row">
 			{% for materia in asignacionMaterias %}
 				<div class="col-md-4">
-					<div class="panel">
-						<div class="panel-body">
-							<a href="{{ path('evaluacion', {'idAsignacionMateria': materia.idAsignacionMateria, 'idPregunta': 1, 'matricula': alumno.matricula}) }}">
+					<a href="{{ path('evaluacion', {'idAsignacionMateria': materia.idAsignacionMateria, 'idPregunta': 1, 'matricula': alumno.matricula}) }}">
+						<div class="panel panel-primary">
+							<div class="panel-body">
 								{{ materia.idCurricula.idMateria.nombreMateria }}
-							</a>
+							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 			{% else %}
 				<div class="col-md-12">
-					<div class="panel">
+					<div class="panel panel-primary">
 						<div class="panel-body">
 							Este alumno no cuenta con materias
 						</div>

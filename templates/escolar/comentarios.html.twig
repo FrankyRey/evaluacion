@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+	Control Escolar
+{% endblock %}
+
+{% block page_subtitle %}
+	Centro de Datos
+{% endblock %}
+
+{% block page_content %}
+	<div class="conteiner-fluid">
+		<div class="row">
+			<div class="col-md-12">
+            	<div class="panel panel-default">
+                	<div class="panel-body">
+                    	<div class="panel-content">
+                            {{ profesor.nombreCompleto }}
+                            <div class="table-responsive">
+                            	<table class="table table-hover" id="comentarios">
+                                	<thead>
+                                    	<tr>
+                                        	<th>Pregunta</th>
+                                            <th>Bueno</th>
+                                            <th>Regular</th>
+                                            <th>Malo</th>
+                                    	</tr>
+                                	</thead>
+                                	<tbody>
+                                    {% for alumno in alumnos %}
+                                	{% for respuestaA in alumno.respuestas %}
+                                        {% for respuesta in respuestaA %}
+                                            <tr>
+                                                <td>{{ respuesta.idOpcionPregunta.idPregunta.textoPregunta }}</td>
+                                                {% if respuesta.idOpcionPregunta.puntaje == 1 %}
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>X</td>
+                                                {% elseif respuesta.idOpcionPregunta.puntaje == 2 %}
+                                                    <td></td>
+                                                    <td>X</td>
+                                                    <td></td>
+                                                {% else %}
+                                                    <td>X</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                {% endif %}
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td>Sin respuesta</td>
+                                            </tr>
+                                        {% endfor %}
+                                	{% else %}
+                                		<tr>
+                                			<td colspan="1">Sin información</td>
+                                		</tr>
+                                	{% endfor %}
+                                    {% endfor %}
+                                	</tbody>
+                                </table>
+                            </div>
+        				</div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

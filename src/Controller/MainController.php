@@ -28,14 +28,20 @@ class MainController extends AbstractController
 
     	if($user)
     	{
-    		if($this->getUser()->hasRole('ROLE_USER'))
+    		if($this->getUser()->hasRole('ROLE_ADMIN'))
     		{
-        		return $this->redirectToRoute('alumno');
+        		return $this->redirectToRoute('escolar');
     		}
         	else
         	{
-        		//if($this->getUser()->hasRole('ROLE_ADMIN'))
-        		return $this->redirectToRoute('escolar');
+        		if($this->getUser()->hasRole('ROLE_USER'))
+                {
+        		  return $this->redirectToRoute('alumno');
+                }
+                else
+                {
+                    return $this->redirect('/login');
+                }
         	}
         }
         else
